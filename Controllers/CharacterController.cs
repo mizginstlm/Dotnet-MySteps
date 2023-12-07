@@ -29,7 +29,13 @@ public class CharacterController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> GetSingle(int id)
     {
-        return Ok(await _characterService.GetCharacterById(id));
+        var response = await _characterService.GetCharacterById(id);
+        if (response.Data is null)
+        {
+            return NotFound(response);
+        }
+        return Ok(response);
+
     }
 
     [HttpPost]
