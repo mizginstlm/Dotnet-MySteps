@@ -49,4 +49,16 @@ public class CharacterController : ControllerBase
         return Ok(response);
     }
 
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> DeleteCharacter(int id)
+    {
+        var response = await _characterService.DeleteCharacter(id);
+        if (response.Data is null)
+        {
+            return NotFound(response);
+        }
+        return Ok(response);
+    }
+
 }
