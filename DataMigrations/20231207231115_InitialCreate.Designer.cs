@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DotnetSteps.Migrations
+namespace DotnetSteps.DataMigrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231207143128_InitialCreate")]
+    [Migration("20231207231115_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -41,12 +41,17 @@ namespace DotnetSteps.Migrations
                     b.Property<int>("HitPoints")
                         .HasColumnType("int");
 
+                    b.Property<string>("ImageUri")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
                     b.Property<int>("Intelligence")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("Strength")
                         .HasColumnType("int");

@@ -9,7 +9,7 @@ public class CharacterService : ICharacterService
 
     private static List<Character> characters = new List<Character>
     {
-        new Character(),
+        new Character{Id=0, Name="frodo"},
         new Character{Id=1, Name="Samuel"}
 };
     private readonly IMapper _mapper;
@@ -91,6 +91,7 @@ public class CharacterService : ICharacterService
             character.Defense = updatedCharacter.Defense;
             character.Intelligence = updatedCharacter.Intelligence;
             character.Class = updatedCharacter.Class;
+            character.ImageUri = updatedCharacter.ImageUri;
 
             serviceResponse.Data = _mapper.Map<GetCharacterDto>(character);
 
