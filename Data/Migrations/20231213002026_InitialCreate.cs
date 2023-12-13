@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace DotnetSteps.DataMigrations
+namespace DotnetSteps.Data.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
@@ -19,7 +19,7 @@ namespace DotnetSteps.DataMigrations
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     HitPoints = table.Column<int>(type: "int", nullable: false),
                     Strength = table.Column<int>(type: "int", nullable: false),
-                    Defense = table.Column<int>(type: "int", nullable: false),
+                    Defense = table.Column<int>(type: "int", precision: 5, scale: 2, nullable: false),
                     Intelligence = table.Column<int>(type: "int", nullable: false),
                     Class = table.Column<int>(type: "int", nullable: false),
                     ImageUri = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DotnetSteps.Dtos.Character;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DotnetSteps.Services.CharacterService
 {
@@ -13,7 +14,6 @@ namespace DotnetSteps.Services.CharacterService
         Task<ServiceResponse<List<GetCharacterDto>>> AddCharacter(AddCharacterDto newCharacter);
         Task<ServiceResponse<GetCharacterDto>> UpdateCharacter(UpdateCharacterDto updatedCharacter);
         Task<ServiceResponse<List<GetCharacterDto>>> DeleteCharacter(int id);
-
 
     }
 }

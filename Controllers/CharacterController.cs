@@ -20,6 +20,7 @@ public class CharacterController : ControllerBase
     {
         _characterService = characterService;
     }
+
     [HttpGet("GetAll")]
     public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> Get()
     {
@@ -54,7 +55,6 @@ public class CharacterController : ControllerBase
         }
         return Ok(response);
     }
-
 
     [HttpDelete("{id}")]
     public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> DeleteCharacter(int id)

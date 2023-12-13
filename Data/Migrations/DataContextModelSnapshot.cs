@@ -3,19 +3,16 @@ using DotnetSteps.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DotnetSteps.DataMigrations
+namespace DotnetSteps.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231207231115_InitialCreate")]
-    partial class InitialCreate
+    partial class DataContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,6 +33,7 @@ namespace DotnetSteps.DataMigrations
                         .HasColumnType("int");
 
                     b.Property<int>("Defense")
+                        .HasPrecision(5, 2)
                         .HasColumnType("int");
 
                     b.Property<int>("HitPoints")
