@@ -1,4 +1,4 @@
-<!-- # Game Store API
+<!-- #   API
 
 ## Starting SQL server
 ```powershell
@@ -10,3 +10,4 @@ docker run -e 'ACCEPT_EULA=Y' microsoft/mssql-server-linux -e 'MSSQL_SA_PASSWORD
 ```powershell
 dotnet user-secrets set 'ConnectionStrings:DefaultConnection' 'Server=localhost; Database=dotnet-steps ;User Id=sa; Password=password123; Trusted_Connection=false; TrustServerCertificate=true;'
 ``` -->
+#Using login and connect database by typing your password from terminal or cmd and continue to make connections is more secure(I recommend it even if I don't use it for now).
