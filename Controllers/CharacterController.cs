@@ -46,9 +46,9 @@ public class CharacterController : ControllerBase
     }
 
     [HttpPut]
-    public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> UpdateCharacter(UpdateCharacterDto updatedCharacter)
+    public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> UpdateCharacter(int id, UpdateCharacterDto updatedCharacter)
     {
-        var response = await _characterService.UpdateCharacter(updatedCharacter);
+        var response = await _characterService.UpdateCharacter(id, updatedCharacter);
         if (response.Data is null)
         {
             return NotFound(response);
