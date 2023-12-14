@@ -15,6 +15,9 @@ public class CharacterService : ICharacterService
         //buraya yeni karakterler eklemiştim boş data olmasın diye, ef kullanmadan önce
     };
 
+
+
+    //IMapper ve DataContext dependencies olarak gelir
     private readonly DataContext _context;
     private readonly IMapper _mapper;
 

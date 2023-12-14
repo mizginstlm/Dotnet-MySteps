@@ -3,7 +3,7 @@ global using DotnetSteps.Services.CharacterService;
 global using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using DotnetSteps.Data;
-
+using DotnetSteps.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -21,13 +21,14 @@ builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 var app = builder.Build();
 
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseOffensiveWordsFilter();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
