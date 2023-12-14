@@ -21,10 +21,12 @@ public class CharacterController : ControllerBase
         _characterService = characterService;
     }
 
+
+    //http://localhost:5042/api/Character/GetAll?filterOn=Name&filterQuery=Track
     [HttpGet("GetAll")]
-    public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> Get()
+    public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> Get(string? filterOn, string? filterQuery, string? sortBy = null, bool isAscending = true, int pageNumber = 1, int pageSize = 1000)
     {
-        return Ok(await _characterService.GetAllCharacters());
+        return Ok(await _characterService.GetAllCharacters(filterOn, filterQuery, sortBy, isAscending, pageNumber, pageSize));
     }
 
     [HttpGet("{id}")]
