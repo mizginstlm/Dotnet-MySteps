@@ -33,7 +33,7 @@ public class CharacterService : ICharacterService
         return ServiceResponse;
     }
 
-    public async Task<ServiceResponse<List<GetCharacterDto>>> DeleteCharacter(int id)
+    public async Task<ServiceResponse<List<GetCharacterDto>>> DeleteCharacter(Guid id)
     {
         var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
         try
@@ -71,7 +71,7 @@ public class CharacterService : ICharacterService
         return serviceResponse;
     }
 
-    public async Task<ServiceResponse<GetCharacterDto>> GetCharacterById(int id)
+    public async Task<ServiceResponse<GetCharacterDto>> GetCharacterById(Guid id)
     {
         var serviceResponse = new ServiceResponse<GetCharacterDto>();
         try
@@ -93,7 +93,7 @@ public class CharacterService : ICharacterService
     }
 
 
-    public async Task<ServiceResponse<GetCharacterDto>> UpdateCharacter(int id, UpdateCharacterDto updatedCharacter)
+    public async Task<ServiceResponse<GetCharacterDto>> UpdateCharacter(Guid id, UpdateCharacterDto updatedCharacter)
     {
         var serviceResponse = new ServiceResponse<GetCharacterDto>();
         try

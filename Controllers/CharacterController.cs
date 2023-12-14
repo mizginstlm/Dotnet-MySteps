@@ -28,7 +28,7 @@ public class CharacterController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> GetSingle(int id)
+    public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> GetSingle(Guid id)
     {
         var response = await _characterService.GetCharacterById(id);
         if (response.Data is null)
@@ -42,22 +42,33 @@ public class CharacterController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> AddCharacter(AddCharacterDto newCharacter)
     {
-        return Ok(await _characterService.AddCharacter(newCharacter));
+
+        if (ModelState.IsValid)
+        {
+            return Ok(await _characterService.AddCharacter(newCharacter));
+        }
+        return BadRequest(ModelState);
     }
 
     [HttpPut]
-    public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> UpdateCharacter(int id, UpdateCharacterDto updatedCharacter)
+    public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> UpdateCharacter(Guid id, UpdateCharacterDto updatedCharacter)
     {
-        var response = await _characterService.UpdateCharacter(id, updatedCharacter);
-        if (response.Data is null)
+
+        if (ModelState.IsValid)
         {
-            return NotFound(response);
+            var response = await _characterService.UpdateCharacter(id, updatedCharacter);
+            if (response.Data is null)
+            {
+                return NotFound(response);
+            }
+            return Ok(response);
         }
-        return Ok(response);
+        return BadRequest(ModelState);
+
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> DeleteCharacter(int id)
+    public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> DeleteCharacter(Guid id)
     {
         var response = await _characterService.DeleteCharacter(id);
         if (response.Data is null)
