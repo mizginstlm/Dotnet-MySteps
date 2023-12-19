@@ -120,16 +120,13 @@ public class CharacterService : ICharacterService
                 }
             }
 
-            // Pagination
+            // Pagination this pagination is just good for smalll data(offset pagination)
             var skipResults = (pageNumber - 1) * pageSize;
             var characters = serviceResponse.Data;
-
             var paginatedCharacters = characters.Skip(skipResults).Take(pageSize).ToList();
-
             var paginatedServiceResponse = new ServiceResponse<List<GetCharacterDto>>
             {
                 Data = paginatedCharacters,
-                // You might want to copy other properties like Success, ErrorMessage, etc.
                 Success = serviceResponse.Success,
                 Message = serviceResponse.Message
             };
@@ -167,7 +164,7 @@ public class CharacterService : ICharacterService
         try
         {
 
-            var character = await _context.Characters.FindAsync(id) ?? throw new Exception($"Character with Id '{updatedCharacter.Id}' not found.");
+            var character = await _context.Characters.FindAsync(id) ?? throw new Exception($"Character with that Id not found.");
 
             character.Name = updatedCharacter.Name;
             character.HitPoints = updatedCharacter.HitPoints;

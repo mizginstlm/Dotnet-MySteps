@@ -19,6 +19,8 @@ namespace DotnetSteps.Data
         }//whenever the model is getting created as part of the migration the context is going to tell the migrations tooling that we have to apply that configuration that we have defined 
 
         public DbSet<Character>? Characters => Set<Character>();
+        public DbSet<User> Users => Set<User>();
+
     }
 
 

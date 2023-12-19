@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "2J7DuMqvKJMcS6vSqteQm9xyWwvaTQOCShKlX/cZJrtvrvxzC87uMzYrsM1TOrXxyv2bHSDrqf9HhsmpbLHM0A==",
+  "dgSpecHash": "QzdYiwJ5kCnsf+4fFABLURa/eW1WLxQuW6mbs37bFmBdGmIZW8b1YWEPQPuaaQ/DjKrwt46iqASQ+EhaLxFiRQ==",
   "success": true,
   "projectFilePath": "/Users/princessbuttercup/Documents/projects-new/dotnet-projects-beginner/DotnetSteps/DotnetSteps.csproj",
   "expectedPackageFiles": [
@@ -45,8 +45,6 @@
     "/Users/princessbuttercup/.nuget/packages/microsoft.sqlserver.server/1.0.0/microsoft.sqlserver.server.1.0.0.nupkg.sha512",
     "/Users/princessbuttercup/.nuget/packages/microsoft.win32.registry/5.0.0/microsoft.win32.registry.5.0.0.nupkg.sha512",
     "/Users/princessbuttercup/.nuget/packages/microsoft.win32.systemevents/5.0.0/microsoft.win32.systemevents.5.0.0.nupkg.sha512",
-    "/Users/princessbuttercup/.nuget/packages/minimalapis.extensions/0.11.0/minimalapis.extensions.0.11.0.nupkg.sha512",
-    "/Users/princessbuttercup/.nuget/packages/minivalidation/0.8.0/minivalidation.0.8.0.nupkg.sha512",
     "/Users/princessbuttercup/.nuget/packages/mono.texttemplating/2.2.1/mono.texttemplating.2.2.1.nupkg.sha512",
     "/Users/princessbuttercup/.nuget/packages/swashbuckle.aspnetcore/6.5.0/swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
     "/Users/princessbuttercup/.nuget/packages/swashbuckle.aspnetcore.swagger/6.5.0/swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",

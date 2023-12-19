@@ -8,7 +8,7 @@ namespace DotnetSteps.Dtos.Character
 {
     public class UpdateCharacterDto
     {
-        public Guid Id { get; set; }
+
         [Required(ErrorMessage = "Must have a name.")][StringLength(50, ErrorMessage = "PLease write with a valid length.")] public string Name { get; set; } = "Ninja Samurai";
         [Range(1, 100, ErrorMessage = "HitPoints must be between 1-100.")] public int HitPoints { get; set; } = 100;
         [Range(1, 100, ErrorMessage = "Strength must be between 1-100.")] public int Strength { get; set; } = 10;
