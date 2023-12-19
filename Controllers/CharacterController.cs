@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using DotnetSteps.Dtos.Character;
 using DotnetSteps.Services.CharacterService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotnetSteps.Controllers;
-
+[Authorize]//ı used middleware and some configs about jwtbearer to use this
 [ApiController]
 [Route("api/[controller]")]
 public class CharacterController : ControllerBase
@@ -21,7 +22,7 @@ public class CharacterController : ControllerBase
         _characterService = characterService;
     }
 
-
+    [AllowAnonymous]//everyone can see doesnt have to authorze
     //http://localhost:5042/api/Character/GetAll?filterOn=Name&filterQuery=Track
     [HttpGet("GetAll")]
     public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> Get(string? filterOn, string? filterQuery, string? sortBy = null, bool isAscending = true, int pageNumber = 1, int pageSize = 1000)
