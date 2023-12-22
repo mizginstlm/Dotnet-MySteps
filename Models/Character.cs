@@ -19,4 +19,6 @@ public class Character
     public CharacterClass Class { get; set; } = CharacterClass.Knight;
     [Url][StringLength(100, ErrorMessage = "PLease write with a valid length")] public string? ImageUri { get; set; }
 
+    public User? User { get; set; }
+
 }

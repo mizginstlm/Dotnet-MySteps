@@ -1,5 +1,6 @@
 global using AutoMapper;
 using System.Reflection;
+using System.Security.Claims;
 using DotnetSteps.Data;
 using DotnetSteps.Dtos.Character;
 using DotnetSteps.Models;
@@ -20,20 +21,31 @@ public class CharacterService : ICharacterService
     //IMapper ve DataContext dependencies olarak gelir
     private readonly DataContext _context;
     private readonly IMapper _mapper;
+    private IHttpContextAccessor _httpContextAccessor;
 
-    public CharacterService(IMapper mapper, DataContext context)
+
+    public CharacterService(IMapper mapper, DataContext context, IHttpContextAccessor httpContextAccessor)
     {
+        _httpContextAccessor = httpContextAccessor;
         _mapper = mapper;
         _context = context;
     }
+    private string GetUserId() => _httpContextAccessor.HttpContext!.User
+   .FindFirstValue(ClaimTypes.NameIdentifier)!;
+
     public async Task<ServiceResponse<List<GetCharacterDto>>> AddCharacter(AddCharacterDto newCharacter)
     {
         var ServiceResponse = new ServiceResponse<List<GetCharacterDto>>();
         var character = _mapper.Map<Character>(newCharacter);
-
+        string userIdString = GetUserId();
+        character.User = await _context.Users.FirstOrDefaultAsync(u => u.Id == new Guid(GetUserId()));
         _context.Characters.Add(_mapper.Map<Character>(character));
         await _context.SaveChangesAsync();
-        ServiceResponse.Data = _context.Characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
+        ServiceResponse.Data =
+                await _context.Characters
+                    .Where(c => c.User!.Id == new Guid(GetUserId()))
+                    .Select(c => _mapper.Map<GetCharacterDto>(c))
+                    .ToListAsync();
         return ServiceResponse;
     }
 
@@ -42,12 +54,18 @@ public class CharacterService : ICharacterService
         var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
         try
         {
-
-            var dbCharacter = await _context.Characters.FindAsync(id) ?? throw new Exception($"Character with Id '{id}' not found.");
+            string userIdString = GetUserId();
+            var dbCharacter = await _context.Characters
+                    .FirstOrDefaultAsync(c => c.Id == id && c.User!.Id == new Guid(userIdString));
+            if (dbCharacter is null)
+                throw new Exception($"Character with Id '{id}' not found.");
 
             _context.Characters.Remove(dbCharacter);
             await _context.SaveChangesAsync();
-            serviceResponse.Data = characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
+            serviceResponse.Data =
+                   await _context.Characters
+                       .Where(c => c.User!.Id == new Guid(userIdString))
+                       .Select(c => _mapper.Map<GetCharacterDto>(c)).ToListAsync();
 
         }
         catch (Exception ex)
@@ -60,10 +78,13 @@ public class CharacterService : ICharacterService
 
     public async Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacters([FromQuery] string? filterOn, [FromQuery] string? filterQuery, string? sortBy = null, bool isAscending = true, int pageNumber = 1, int pageSize = 1000)
     {
+
         var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
         if (_context.Characters != null)
         {
-            var dbCharacters = await _context.Characters.ToListAsync();
+            string userIdString = GetUserId();
+            var x = new Guid(userIdString);
+            var dbCharacters = await _context.Characters.Where(c => c.User!.Id == x).ToListAsync();
             serviceResponse.Data = dbCharacters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
 
             //burada sadece name için filter var
@@ -141,7 +162,12 @@ public class CharacterService : ICharacterService
         var serviceResponse = new ServiceResponse<GetCharacterDto>();
         try
         {
-            var dbCharacter = await _context.Characters.FindAsync(id) ?? throw new Exception($"Character with Id '{id}' not found.");
+            var chechId = await _context.Characters.FindAsync(id) ?? throw new Exception($"Character with Id '{id}' not found.");
+
+            string userIdString = GetUserId();
+
+            var dbCharacter = await _context.Characters
+                .FirstOrDefaultAsync(c => c.Id == id && c.User!.Id == new Guid(userIdString));
             // var character = characters.FirstOrDefault(c => c.Id == id) ?? throw new Exception($"Character with Id '{id}' not found.");
 
             serviceResponse.Data = _mapper.Map<GetCharacterDto>(dbCharacter);
@@ -152,9 +178,6 @@ public class CharacterService : ICharacterService
             serviceResponse.Message = ex.Message;
         }
         return serviceResponse;
-
-
-
     }
 
 

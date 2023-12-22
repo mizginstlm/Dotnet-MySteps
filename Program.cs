@@ -32,7 +32,6 @@ builder.Services.AddSwaggerGen(c =>
 
     c.OperationFilter<SecurityRequirementsOperationFilter>();
 });
-
 builder.Services.AddScoped<ICharacterService, CharacterService>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)//auth scheme
@@ -49,7 +48,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)//auth
     });
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 //this is automatically will be addscoped by ef pacckage , and it will construct options of this datacontex
-
+builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 
 

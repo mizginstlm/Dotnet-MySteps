@@ -22,7 +22,7 @@ public class CharacterController : ControllerBase
         _characterService = characterService;
     }
 
-    [AllowAnonymous]//everyone can see doesnt have to authorze
+    // [AllowAnonymous]//everyone can see doesnt have to authorze
     //http://localhost:5042/api/Character/GetAll?filterOn=Name&filterQuery=Track
     [HttpGet("GetAll")]
     public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> Get(string? filterOn, string? filterQuery, string? sortBy = null, bool isAscending = true, int pageNumber = 1, int pageSize = 1000)
