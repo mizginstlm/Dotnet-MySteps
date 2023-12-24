@@ -5,6 +5,7 @@ using System.Reflection;
 using DotnetSteps.Data;
 using DotnetSteps.Extensions;
 using DotnetSteps.Repository;
+using DotnetSteps.Services.PowerService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.IdentityModel.Tokens;
@@ -34,6 +35,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 builder.Services.AddScoped<ICharacterService, CharacterService>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IPowerService, PowerService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)//auth scheme
     .AddJwtBearer(options =>
     {

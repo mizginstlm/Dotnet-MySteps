@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DotnetSteps.Dtos.Character;
+using DotnetSteps.Dtos.Power;
 
 namespace DotnetSteps
 {
@@ -12,6 +13,8 @@ namespace DotnetSteps
         {
             CreateMap<Character, GetCharacterDto>();
             CreateMap<AddCharacterDto, Character>();
+            CreateMap<Power, GetPowerDto>();
+
 
         }
     }

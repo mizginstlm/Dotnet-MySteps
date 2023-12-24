@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using DotnetSteps.Dtos.Power;
 
 namespace DotnetSteps.Dtos.Character
 {
@@ -16,5 +17,6 @@ namespace DotnetSteps.Dtos.Character
         [Range(1, 100, ErrorMessage = "Intelligence must be between 1-100.")] public int Intelligence { get; set; } = 10;
         public CharacterClass Class { get; set; } = CharacterClass.Knight;
         [Url][StringLength(100, ErrorMessage = "PLease write with a valid length")] public string? ImageUri { get; set; }
+        public GetPowerDto? Power { get; set; }
     }
 }

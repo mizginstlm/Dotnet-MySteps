@@ -83,10 +83,12 @@ public class CharacterService : ICharacterService
         if (_context.Characters != null)
         {
             string userIdString = GetUserId();
-            var x = new Guid(userIdString);
-            var dbCharacters = await _context.Characters.Where(c => c.User!.Id == x).ToListAsync();
+            var dbCharacters = await _context.Characters.Include(c => c.Power).Where(c => c.User!.Id == new Guid(userIdString)).ToListAsync();//power include etmedikçe gelmedi
             serviceResponse.Data = dbCharacters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
-
+            foreach (var character in dbCharacters)
+            {
+                Console.WriteLine($"CharacterId: {character.Id}, Power: {character.Power?.Name}");
+            }
             //burada sadece name için filter var
             // if (string.IsNullOrWhiteSpace(filterOn) == false && string.IsNullOrWhiteSpace(filterQuery) == false)
             // {
@@ -186,8 +188,13 @@ public class CharacterService : ICharacterService
         var serviceResponse = new ServiceResponse<GetCharacterDto>();
         try
         {
-
-            var character = await _context.Characters.FindAsync(id) ?? throw new Exception($"Character with that Id not found.");
+            string userIdString = GetUserId();
+            var character =
+                    await _context.Characters
+                        .Include(c => c.User)//Entity framework did not include the related object to the character.It works when we add a second condition to the first or a default method here because the DB context
+                        .FirstOrDefaultAsync(c => c.Id == id);
+            if (character is null || character.User.Id != new Guid(userIdString))
+                throw new Exception($"Character with Id '{id}' not found.");
 
             character.Name = updatedCharacter.Name;
             character.HitPoints = updatedCharacter.HitPoints;
