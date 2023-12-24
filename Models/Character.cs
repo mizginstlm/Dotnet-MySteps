@@ -21,5 +21,5 @@ public class Character
 
     public User? User { get; set; }
     public Power? Power { get; set; }
-
+    public List<Skill>? Skill { get; set; }
 }
