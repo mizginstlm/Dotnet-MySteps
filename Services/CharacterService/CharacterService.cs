@@ -83,7 +83,7 @@ public class CharacterService : ICharacterService
         if (_context.Characters != null)
         {
             string userIdString = GetUserId();
-            var dbCharacters = await _context.Characters.Include(c => c.Power).Where(c => c.User!.Id == new Guid(userIdString)).ToListAsync();//power include etmedikçe gelmedi
+            var dbCharacters = await _context.Characters.Include(c => c.Power).Include(c => c.Abilities).Where(c => c.User!.Id == new Guid(userIdString)).ToListAsync();//power include etmedikçe gelmedi
             serviceResponse.Data = dbCharacters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
             foreach (var character in dbCharacters)
             {
@@ -215,6 +215,45 @@ public class CharacterService : ICharacterService
         return serviceResponse;
     }
 
+    public async Task<ServiceResponse<GetCharacterDto>> AddCharacterAbility(AddCharacterAbilityDto newCharacterAbility)
+    {
+        var response = new ServiceResponse<GetCharacterDto>();
+        try
+        {
+            string userIdString = GetUserId();
+            var character = await _context.Characters
+                .Include(c => c.Power)
+                .Include(c => c.Abilities)
+                .FirstOrDefaultAsync(c => c.Id == newCharacterAbility.CharacterId &&
+                    c.User!.Id == new Guid(userIdString));
 
+            if (character is null)
+            {
+                response.Success = false;
+                response.Message = "Character not found.";
+                return response;
+            }
+
+            var ability = await _context.Abilities
+                .FirstOrDefaultAsync(s => s.Id == newCharacterAbility.AbilityId);
+            if (ability is null)
+            {
+                response.Success = false;
+                response.Message = "Ability not found.";
+                return response;
+            }
+
+            character.Abilities!.Add(ability);
+            await _context.SaveChangesAsync();
+            response.Data = _mapper.Map<GetCharacterDto>(character);
+        }
+        catch (Exception ex)
+        {
+            response.Success = false;
+            response.Message = ex.Message;
+        }
+
+        return response;
+    }
 }
 

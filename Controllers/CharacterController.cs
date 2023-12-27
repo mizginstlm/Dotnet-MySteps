@@ -81,4 +81,11 @@ public class CharacterController : ControllerBase
         return Ok(response);
     }
 
+    [HttpPost("Ability")]
+    public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> AddCharacterAbility(
+           AddCharacterAbilityDto newCharacterAbility)
+    {
+        return Ok(await _characterService.AddCharacterAbility(newCharacterAbility));
+    }
+
 }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DotnetSteps.DataMigrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231224015356_Skills")]
-    partial class Skills
+    [Migration("20231227205304_Ability")]
+    partial class Ability
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,19 +25,59 @@ namespace DotnetSteps.DataMigrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CharacterSkill", b =>
+            modelBuilder.Entity("AbilityCharacter", b =>
                 {
+                    b.Property<int>("AbilitiesId")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("CharactersId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("SkillId")
-                        .HasColumnType("uniqueidentifier");
+                    b.HasKey("AbilitiesId", "CharactersId");
 
-                    b.HasKey("CharactersId", "SkillId");
+                    b.HasIndex("CharactersId");
 
-                    b.HasIndex("SkillId");
+                    b.ToTable("AbilityCharacter");
+                });
 
-                    b.ToTable("CharacterSkill");
+            modelBuilder.Entity("DotnetSteps.Models.Ability", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Damage")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Abilities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Damage = 30,
+                            Name = "Fireball"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Damage = 20,
+                            Name = "Frenzy"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Damage = 50,
+                            Name = "Blizzard"
+                        });
                 });
 
             modelBuilder.Entity("DotnetSteps.Models.Character", b =>
@@ -104,24 +144,6 @@ namespace DotnetSteps.DataMigrations
                     b.ToTable("Powers");
                 });
 
-            modelBuilder.Entity("DotnetSteps.Models.Skill", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Damage")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Skills");
-                });
-
             modelBuilder.Entity("DotnetSteps.Models.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -146,17 +168,17 @@ namespace DotnetSteps.DataMigrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("CharacterSkill", b =>
+            modelBuilder.Entity("AbilityCharacter", b =>
                 {
-                    b.HasOne("DotnetSteps.Models.Character", null)
+                    b.HasOne("DotnetSteps.Models.Ability", null)
                         .WithMany()
-                        .HasForeignKey("CharactersId")
+                        .HasForeignKey("AbilitiesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DotnetSteps.Models.Skill", null)
+                    b.HasOne("DotnetSteps.Models.Character", null)
                         .WithMany()
-                        .HasForeignKey("SkillId")
+                        .HasForeignKey("CharactersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

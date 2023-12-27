@@ -14,6 +14,7 @@ namespace DotnetSteps.Services.CharacterService
         Task<ServiceResponse<List<GetCharacterDto>>> AddCharacter(AddCharacterDto newCharacter);
         Task<ServiceResponse<GetCharacterDto>> UpdateCharacter(Guid id, UpdateCharacterDto updatedCharacter);
         Task<ServiceResponse<List<GetCharacterDto>>> DeleteCharacter(Guid id);
+        Task<ServiceResponse<GetCharacterDto>> AddCharacterAbility(AddCharacterAbilityDto newCharacterAbility);
 
     }
 }

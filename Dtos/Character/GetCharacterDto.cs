@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using DotnetSteps.Dtos.Power;
+using DotnetSteps.Dtos.Ability;
 
 namespace DotnetSteps.Dtos.Character
 {
@@ -18,5 +19,7 @@ namespace DotnetSteps.Dtos.Character
         public CharacterClass Class { get; set; } = CharacterClass.Knight;
         [Url][StringLength(100, ErrorMessage = "PLease write with a valid length")] public string? ImageUri { get; set; }
         public GetPowerDto? Power { get; set; }
+        public List<GetAbilityDto>? Abilities { get; set; }
+
     }
 }
