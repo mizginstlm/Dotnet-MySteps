@@ -20,6 +20,8 @@ namespace DotnetSteps.Dtos.Character
         [Url][StringLength(100, ErrorMessage = "PLease write with a valid length")] public string? ImageUri { get; set; }
         public GetPowerDto? Power { get; set; }
         public List<GetAbilityDto>? Abilities { get; set; }
-
+        public int Matches { get; set; }
+        public int Victories { get; set; }
+        public int Defeats { get; set; }
     }
 }

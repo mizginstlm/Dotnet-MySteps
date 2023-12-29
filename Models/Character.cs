@@ -22,7 +22,8 @@ public class Character
     public User? User { get; set; }
     public Power? Power { get; set; }
     public List<Ability>? Abilities { get; set; }
-
-
+    public int Matches { get; set; }
+    public int Victories { get; set; }
+    public int Defeats { get; set; }
 
 }
